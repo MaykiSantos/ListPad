@@ -28,6 +28,10 @@ android {
 }
 
 dependencies {
+    def roomVersion = "2.3.0" //versao do Room e do annotationProcessor
+
+    implementation("androidx.room:room-runtime:$roomVersion") //biblioteca do Room
+    annotationProcessor("androidx.room:room-compiler:$roomVersion") //Anotacoes do Room
 
     implementation 'androidx.appcompat:appcompat:1.3.1'
     implementation 'com.google.android.material:material:1.4.0'
