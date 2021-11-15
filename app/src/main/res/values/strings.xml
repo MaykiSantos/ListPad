@@ -1,3 +1,28 @@
 <resources>
     <string name="app_name">ListPad</string>
+    <string name="sobre">Sobre</string>
+    <string name="nova_categoria">Nova categoria</string>
+    <string name="editar">Editar</string>
+    <string name="excluir">Excluir</string>
+    <string name="descricao">Descrição</string>
+    <string name="salvar">Salvar</string>
+    <string name="campo_descricao_categoria">campo para adicionar a descrição da categoria</string>
+    <string name="campo_titulo_lista">campo para adicionar a titulo da lista</string>
+    <string name="campo_descricao_lista">campo para adicionar a descrição da lista</string>
+    <string name="campo_selecao_categoria">campo para selecionar a categoria da lista</string>
+    <string name="campo_selecao_urgencia">campo para selecionar a urgencia da lista</string>
+    <string name="digite_aqui">digite aqui</string>
+    <string name="titulo">Titulo</string>
+    <string name="categoria">Categoria</string>
+    <string name="urgencia">Urgencia</string>
+    <string-array name="categoria_exemplo">
+        <item>material escolar</item>
+        <item>super mercado</item>
+        <item>lista de asamento</item>
+    </string-array>
+    <string-array name="urgencia_exemplo">
+        <item>Tranquilo</item>
+        <item>Moderado</item>
+        <item>Urgente</item>
+    </string-array>
 </resources>

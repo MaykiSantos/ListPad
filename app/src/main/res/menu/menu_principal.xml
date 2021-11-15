@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item
+        android:id="@+id/menu_de_contexto_Editar"
+        android:title="@string/nova_categoria" />
+    <item
+        android:id="@+id/menu_de_contexto_excluir"
+        android:title="@string/sobre" />
+</menu>

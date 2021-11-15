@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <TextView
+        android:id="@+id/layout_lista_tv_categoria"
+        android:layout_width="0dp"
+        android:layout_height="20dp"
+        android:layout_marginTop="3dp"
+        android:paddingEnd="5dp"
+        android:text="Categoria livro"
+        android:textAlignment="viewEnd"
+        android:textColor="#000000"
+        android:textSize="12sp"
+        android:textStyle="bold"
+        app:layout_constraintEnd_toEndOf="@+id/layout_lista_iv_urgencia"
+        app:layout_constraintTop_toBottomOf="@+id/layout_lista_iv_urgencia" />
+
+    <TextView
+        android:id="@+id/layout_lista_tv_titulo"
+        android:layout_width="262dp"
+        android:layout_height="30dp"
+        android:layout_marginStart="6dp"
+        android:layout_marginTop="3dp"
+        android:paddingStart="5dp"
+        android:text="Titulo do livro livro livro"
+        android:textColor="#000000"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/layout_lista_tv_descricao"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="6dp"
+        android:layout_marginEnd="6dp"
+        android:paddingStart="5dp"
+        android:text="breve descica do coteudo da lista"
+        android:textSize="16sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/layout_lista_tv_categoria" />
+
+    <ImageView
+        android:id="@+id/layout_lista_iv_urgencia"
+        android:layout_width="15dp"
+        android:layout_height="15dp"
+        android:layout_marginEnd="6dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/layout_lista_tv_titulo"
+        app:srcCompat="@drawable/ic_bola_vermelha" />
+</androidx.constraintlayout.widget.ConstraintLayout>
