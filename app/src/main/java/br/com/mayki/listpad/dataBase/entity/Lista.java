@@ -28,11 +28,11 @@ public class Lista implements Serializable {
     public Lista(){}
 
     @Ignore
-    public Lista(String nome, String descricao, TipoUregencia urgencia, Date dataCriacao, Integer idCategoria) {
+    public Lista(String nome, String descricao, TipoUregencia urgencia, Integer idCategoria) {
         this.nome = nome;
         this.descricao = descricao;
         this.urgencia = urgencia;
-        this.dataCriacao = dataCriacao;
+        this.dataCriacao = new Date();
         this.idCategoria = idCategoria;
     }
 

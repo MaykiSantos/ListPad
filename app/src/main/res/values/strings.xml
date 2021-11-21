@@ -15,10 +15,12 @@
     <string name="titulo">Titulo</string>
     <string name="categoria">Categoria</string>
     <string name="urgencia">Urgencia</string>
+    <string name="buscar">Buscar</string>
+    <string name="adicionar_lista">adicionar Lista</string>
     <string-array name="categoria_exemplo">
-        <item>material escolar</item>
-        <item>super mercado</item>
-        <item>lista de asamento</item>
+        <item>categoria 01</item>
+        <item>categoria 01</item>
+        <item>categoria 01</item>
     </string-array>
     <string-array name="urgencia_exemplo">
         <item>Tranquilo</item>

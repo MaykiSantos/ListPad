@@ -1,5 +1,6 @@
 package br.com.mayki.listpad.dataBase.entity;
 
+import androidx.annotation.NonNull;
 import androidx.room.Entity;
 import androidx.room.Ignore;
 import androidx.room.PrimaryKey;
@@ -33,5 +34,11 @@ public class Categoria implements Serializable {
 
     public void setDescricao(String descricao) {
         this.descricao = descricao;
+    }
+
+    @NonNull
+    @Override
+    public String toString() {
+        return descricao;
     }
 }
