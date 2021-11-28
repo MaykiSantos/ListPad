@@ -2,7 +2,7 @@
 
 <div align="center">
 <h2>Projeto integrado das disciplinas de Programação de Dispositivos Android 1 e Banco de Dados para Computação Móvel</h2>
-<h2 align="center">🚧  Em construção...  🚧</h2>
+  
 <p>Mayki dos Santos Oliveira</br>
 mayki.santos@aluno.ifsp.edu.br</p>
 </div>
