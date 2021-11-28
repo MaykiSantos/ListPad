@@ -23,7 +23,7 @@ mayki.santos@aluno.ifsp.edu.br</p>
 <img src="https://raw.githubusercontent.com/MaykiSantos/ListPad/master/dadosProjeto/modelo-telas-ListPad.jpg">
 
 
-<h3>5. Funcionamento Parcial do sistema</h3>
+<h3>5. Funcionamento do sistema</h3>
 
 <div heigh=90px>
 
