@@ -2,24 +2,19 @@ package br.com.mayki.listpad.ui;
 
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
-import androidx.room.RoomDatabase;
 
 import android.os.Bundle;
-import android.util.Log;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.Toast;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-
-import br.com.mayki.listpad.R;
 import br.com.mayki.listpad.dataBase.RoomListPad;
 import br.com.mayki.listpad.dataBase.dao.ListaDAO;
+import br.com.mayki.listpad.dataBase.dao.relacionamentos.ListaCategoria;
 import br.com.mayki.listpad.dataBase.entity.Categoria;
 import br.com.mayki.listpad.dataBase.entity.Lista;
 import br.com.mayki.listpad.dataBase.entity.TipoUregencia;
@@ -28,7 +23,11 @@ import br.com.mayki.listpad.databinding.ActivityNovaListaBinding;
 public class NovaListaActivity extends AppCompatActivity {
 
     ActivityNovaListaBinding activityNovaListaBinding;
-    final String NOME_PAGINA = "Nova Lista";
+
+    ListaCategoria listaCategoriaEditar;
+
+    final String NOME_PAGINA_NOVO = "Nova lista";
+    final String NOME_PAGINA_EDITAR = "Editar lista";
 
     ArrayAdapter<Categoria> adapterListaCategorias;
     ArrayAdapter<TipoUregencia> adapterListaUrgencia;
@@ -49,37 +48,76 @@ public class NovaListaActivity extends AppCompatActivity {
         activityNovaListaBinding = ActivityNovaListaBinding.inflate(getLayoutInflater());
         setContentView(activityNovaListaBinding.getRoot());
 
-        carregaCampos();
-
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle(NOME_PAGINA);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
-        defineValoresDoSpinnerDeCategorias();
-        defineValoresDoSpinnerDeUrgencia();
-
         listaDAO = RoomListPad.getInstance(this).getListaDAO();
 
+        listaCategoriaEditar = (ListaCategoria) getIntent().getSerializableExtra(Constantes.LISTA_CATEGORIA);
+
+
+
+        carregaCampos();
+        defineToolbar();
+        defineValoresDoSpinnerDeCategorias();
+        defineValoresDoSpinnerDeUrgencia();
+        defineEventoDeSalvarLista();
+
+        if(listaCategoriaEditar != null){
+            prencheCampos();
+        }
+
+    }
+
+    private void prencheCampos() {
+        titulo.setText(listaCategoriaEditar.lista.getNome());
+        descricao.setText(listaCategoriaEditar.lista.getDescricao());
+        categoria.setSelection(adapterListaCategorias.getPosition(listaCategoriaEditar.categoria));
+        urgencia.setSelection(adapterListaUrgencia.getPosition(listaCategoriaEditar.lista.getUrgencia()));
+    }
+
+    private void defineEventoDeSalvarLista() {
         butaoSalvar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 //adicionar verificação de campos vazios
+                if(titulo.getText().toString().isEmpty() || descricao.getText().toString().isEmpty()){
+                    Toast.makeText(NovaListaActivity.this, "Prenha os campos", Toast.LENGTH_SHORT).show();
+                    ((InputMethodManager)getSystemService(INPUT_METHOD_SERVICE)).hideSoftInputFromWindow(titulo.getWindowToken(), 0); //oculta teclado
+                }else{
+                    //criar nova lista e salvar
+                    if(listaCategoriaEditar == null){
+                    persisteLista();
+                    }else{
+                        listaCategoriaEditar.lista.setNome(titulo.getText().toString());
+                        listaCategoriaEditar.lista.setDescricao(descricao.getText().toString());
+                        listaCategoriaEditar.lista.setIdCategoria(adapterListaCategorias.getItem(categoria.getSelectedItemPosition()).getId());
+                        listaCategoriaEditar.lista.setUrgencia(TipoUregencia.valueOf(adapterListaUrgencia.getItem(urgencia.getSelectedItemPosition()).toString()));
 
-
-                //criar nova lista e salvar
-                Lista novaLista = new Lista(
-                        titulo.getText().toString(),
-                        descricao.getText().toString(),
-                        TipoUregencia.valueOf(adapterListaUrgencia.getItem(urgencia.getSelectedItemPosition()).toString()),
-                        adapterListaCategorias.getItem(categoria.getSelectedItemPosition()).getId()
-                );
-                listaDAO.salvar(novaLista);
-                finish();
-
-
+                        listaDAO.atualiza(listaCategoriaEditar.lista);
+                        setResult(RESULT_OK);
+                    }
+                    finish();
+                }
             }
         });
+    }
 
+    private void persisteLista() {
+        Lista novaLista = new Lista(
+                titulo.getText().toString(),
+                descricao.getText().toString(),
+                TipoUregencia.valueOf(adapterListaUrgencia.getItem(urgencia.getSelectedItemPosition()).toString()),
+                adapterListaCategorias.getItem(categoria.getSelectedItemPosition()).getId()
+        );
+        listaDAO.salvar(novaLista);
+    }
+
+    private void defineToolbar() {
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        if(listaCategoriaEditar == null){
+        getSupportActionBar().setTitle(NOME_PAGINA_NOVO);
+        }else{
+            getSupportActionBar().setTitle(NOME_PAGINA_EDITAR);
+        }
     }
 
     private void defineValoresDoSpinnerDeUrgencia() {

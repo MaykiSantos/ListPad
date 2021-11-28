@@ -10,20 +10,30 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.ListPad">
         <activity
+            android:name=".ui.NovoItemActivity"
+            android:exported="true"
+            android:parentActivityName=".ui.DetalheListaActivity">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="br.com.mayki.listpad.ui.DetalheListaActivity" />
+
+        </activity>
+        <activity
             android:name=".ui.SobreActivity"
             android:exported="true"
             android:parentActivityName=".ui.MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="br.com.mayki.listpad.ui.MainActivity"/>
+                android:value="br.com.mayki.listpad.ui.MainActivity" />
         </activity>
         <activity
             android:name=".ui.DetalheListaActivity"
             android:exported="true"
+            android:launchMode="singleTop"
             android:parentActivityName=".ui.MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="br.com.mayki.listpad.ui.MainActivity"/>
+                android:value="br.com.mayki.listpad.ui.MainActivity" />
         </activity>
         <activity
             android:name=".ui.NovaListaActivity"
@@ -31,7 +41,7 @@
             android:parentActivityName=".ui.MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="br.com.mayki.listpad.ui.MainActivity"/>
+                android:value="br.com.mayki.listpad.ui.MainActivity" />
         </activity>
         <activity
             android:name=".ui.NovaCategoriaActivity"
@@ -39,12 +49,12 @@
             android:parentActivityName=".ui.MainActivity">
             <meta-data
                 android:name="android.support.PARENT_ACTIVITY"
-                android:value="br.com.mayki.listpad.ui.MainActivity"/>
+                android:value="br.com.mayki.listpad.ui.MainActivity" />
         </activity>
         <activity
             android:name=".ui.MainActivity"
             android:exported="true"
-            android:windowSoftInputMode="adjustNothing"> <!--Evita que o float button inferior fique em cima do teclado-->
+            android:windowSoftInputMode="adjustNothing"> <!-- Evita que o float button inferior fique em cima do teclado -->
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

@@ -1,12 +1,13 @@
 package br.com.mayki.listpad.ui;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.ContextMenu;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -39,25 +40,35 @@ public class MainActivity extends AppCompatActivity {
         activityMainBinding = ActivityMainBinding.inflate(getLayoutInflater());
         setContentView(activityMainBinding.getRoot());
 
-        Toolbar barraSuperior = (Toolbar) activityMainBinding.activityMainToolbar;
-        setSupportActionBar(barraSuperior);
-        barraSuperior.setTitle(NOME_PAGINA);
-
-        CarregaCampos();
-
+        defineToolbar();
+        carregaCampos();
+        populaListaComAdapter();
         defineEventoParaChamarActivityNovaLista();
+        defieEventoParaChamarActivityDetalheLista();
+    }
 
+    @Override
+    protected void onResume() {
+        super.onResume();
+        atualizaLista();
+    }
+
+    private void defieEventoParaChamarActivityDetalheLista() {
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> adapter, View view, int i, long l) {
-
                 Intent intent = new Intent(MainActivity.this, DetalheListaActivity.class);
                 intent.putExtra(Constantes.LISTA_CATEGORIA, ((ListaAdapter)adapter.getAdapter()).getItem(i));
 
                 startActivity(intent);
             }
         });
+    }
 
+    private void defineToolbar() {
+        Toolbar barraSuperior = (Toolbar) activityMainBinding.activityMainToolbar;
+        setSupportActionBar(barraSuperior);
+        barraSuperior.setTitle(NOME_PAGINA);
 
     }
 
@@ -70,24 +81,24 @@ public class MainActivity extends AppCompatActivity {
         });
     }
 
-    @Override
-    protected void onResume() {
-        super.onResume();
-        atualizaListaTelaprinipal();
-    }
 
-    private void atualizaListaTelaprinipal() {
+
+    private void populaListaComAdapter() {
         listaDAO = RoomListPad.getInstance(this).getListaDAO();
         adapterLista = new ListaAdapter(this, listaDAO.buscarTodos());
         listView.setAdapter(adapterLista);
         registerForContextMenu(listView);
     }
 
-    private void CarregaCampos() {
+    private void carregaCampos() {
         listView = activityMainBinding.activityMainListView;
         floatingActionButton = activityMainBinding.activityMainFbAdicionarLista;
     }
 
+    private void atualizaLista(){
+        adapterLista.clear();
+        adapterLista.addAll(listaDAO.buscarTodos());
+    }
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
@@ -108,19 +119,43 @@ public class MainActivity extends AppCompatActivity {
         switch (item.getItemId()){
             case R.id.menu_de_contexto_editar:
                 //feginir aqui a opção de editar
+                int posicaoElemento = ((AdapterView.AdapterContextMenuInfo) item.getMenuInfo()).position;
+                Intent intent = new Intent(this, NovaListaActivity.class);
+                intent.putExtra(Constantes.LISTA_CATEGORIA, adapterLista.getItem(posicaoElemento));
+                startActivity(intent);
+
                 Toast.makeText(this, "Editar Clicado", Toast.LENGTH_LONG).show();
                 return false;
             case R.id.menu_de_contexto_excluir:
                 //excluir lista
-                int posicaoElemento = ((AdapterView.AdapterContextMenuInfo)item.getMenuInfo()).position;
-                ListaCategoria l = adapterLista.getItem(posicaoElemento);
-                RoomListPad.getInstance(this).getListaDAO().deletar(l.lista);
-                atualizaListaTelaprinipal();
-                return  true;
+                exiteDialog(item);
+                return true;
+
             default:
                 return false;
         }
 
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        populaListaComAdapter();
+    }
+
+    private void exiteDialog(@NonNull MenuItem item) {
+        new AlertDialog.Builder(this)
+                .setTitle("Removendo lista")
+                .setMessage("Tem certeza que quer remover esta lista?")
+                .setPositiveButton("Sim", (dialogInterface, i) -> excluiListaSelecionada(item))
+                .setNegativeButton("não", null).show();
+    }
+
+    private void excluiListaSelecionada(@NonNull MenuItem item) {
+        int posicaoElemento = ((AdapterView.AdapterContextMenuInfo) item.getMenuInfo()).position;
+        ListaCategoria l = adapterLista.getItem(posicaoElemento);
+        RoomListPad.getInstance(this).getListaDAO().deletar(l.lista);
+        populaListaComAdapter();
     }
 
     @Override

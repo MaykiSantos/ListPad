@@ -17,6 +17,7 @@
     <string name="urgencia">Urgencia</string>
     <string name="buscar">Buscar</string>
     <string name="adicionar_lista">adicionar Lista</string>
+    <string name="item_01">Item 01</string>
     <string-array name="categoria_exemplo">
         <item>categoria 01</item>
         <item>categoria 01</item>

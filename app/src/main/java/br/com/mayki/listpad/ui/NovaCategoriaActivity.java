@@ -34,11 +34,12 @@ public class NovaCategoriaActivity extends AppCompatActivity {
         categoriaDao = RoomListPad.getInstance(this).getCategoriaDAO();
 
         carregaCampos();
+        defineToolbar();
+        defineEventoDeSalvarCategoria();
 
-        setSupportActionBar(toolbar);
-        getSupportActionBar().setTitle(NOME_PAGINA);
-        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+    }
 
+    private void defineEventoDeSalvarCategoria() {
         botaoSalvar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -54,7 +55,12 @@ public class NovaCategoriaActivity extends AppCompatActivity {
 
             }
         });
+    }
 
+    private void defineToolbar() {
+        setSupportActionBar(toolbar);
+        getSupportActionBar().setTitle(NOME_PAGINA);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
     }
 
     private void carregaCampos() {
